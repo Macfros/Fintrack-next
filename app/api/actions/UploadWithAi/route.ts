@@ -29,7 +29,7 @@ export async function POST(req:any, res: any) {
 
 
             const mindeeClient = new mindee.Client({ apiKey: "394ae5ea50137ff83c5ba4fcd3cea594" });
-
+                console.log();
                 // Load a file from disk
                 const inputSource = mindeeClient.docFromPath("C:/Users/RSK.BSL-243/Desktop/billSample.jpeg");
 
