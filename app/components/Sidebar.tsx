@@ -8,7 +8,6 @@ import {FiMail} from "react-icons/fi";
 import {TiContacts} from "react-icons/ti";
 import {useState} from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { Icon } from "next/dist/lib/metadata/types/metadata-types";
 import {SidebarContext} from "./SidebarContext";
 
 
@@ -23,17 +22,17 @@ const sidebarItems = [
     icon: AiOutlineHome,
   },
   {
-    name: "About",
-    href: "/about",
+    name: "Bills",
+    href: "/bills",
     icon: BsPeople,
   },
   {
-    name: "Mails",
-    href: "/mails",
+    name: "Reports",
+    href: "/reports",
     icon: FiMail,
   },
   {
-     name: "Contacts",
+     name: "ITR filing",
      href: "/contacts",
      icon: TiContacts,
   }]

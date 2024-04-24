@@ -8,7 +8,7 @@ import MainPage from "./components/MainPage";
 
 export default function Home() {
   const { data: session, status } = useSession()
-  console.log(session);
+  console.log("session",session);
   return (
     <main className="">
       <div className="">

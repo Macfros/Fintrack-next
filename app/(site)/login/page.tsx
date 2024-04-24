@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input"
 import toast from "react-hot-toast";
 import Image from "next/image";
+import getUser from "@/app/api/hooks/getUser";
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -30,7 +32,10 @@ const formSchema = z.object({
 
 
 export default function Login() {
+
     // 1. Define your form.
+    const router = useRouter();
+   
     const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -50,12 +55,14 @@ export default function Login() {
                 toast.error(callback.error);
                 
             }
-
             if(callback?.ok && !callback?.error){
                 toast.success("User Logged in");
+                router.push("/");
             }
         })
     }
+
+
   
     return (
       <div className="flex justify-center gap-2 align-middle">
@@ -70,7 +77,7 @@ export default function Login() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="user@email.com" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your public display username.
@@ -86,7 +93,7 @@ export default function Login() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your secret Password
@@ -95,9 +102,13 @@ export default function Login() {
               </FormItem>
             )}
           />
-          <Button type="submit">Login</Button>
-          <div className="flex"><hr/>Or<hr/></div>
-          <Button className="w-full bg-red-500" onClick={()=>signIn('google')}>Google</Button>
+          <Button type="submit" className="bg-[#60a5fa] hover:shadow-2xl hover:shadow-black">Login</Button>
+          <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">OR</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+          </div>
+          <Button className="w-full bg-red-500 text-white hover:bg-black" onClick={()=>signIn('google')}>Google</Button>
         </form>
       </Form>
       </div>

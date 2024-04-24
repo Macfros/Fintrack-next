@@ -1,4 +1,4 @@
-"use client"
+
 
 import { getServerSession } from "next-auth/next"
 
@@ -10,6 +10,17 @@ export async function getSession() {
   return await getServerSession(authOptions)
 }
 
+interface SafeUser {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+  emailVerified?: Date | null;
+  image?: string | null;
+  hashedPassword?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 const getUser = async() => {
   try {
     const session = await getSession();
@@ -18,7 +29,7 @@ const getUser = async() => {
       return null;
     }
 
-    const currentUser = await prisma.user.findUnique({
+    const currentUser : SafeUser | null  = await prisma.user.findUnique({
       where: {
         email: session.user.email as string,
       }
@@ -27,6 +38,8 @@ const getUser = async() => {
     if (!currentUser) {
       return null;
     }
+
+    //console.log(currentUser);
 
     return currentUser;
 

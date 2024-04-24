@@ -68,7 +68,6 @@ export const authOptions : NextAuthOptions = {
           token.accessToken = account.access_token;
           token.id = user.id;
           token.username = (user as User).email;
-          console.log({ user });
         }
         return token;
       }
