@@ -18,7 +18,6 @@ cloudinary.v2.config({
 
   export async function savePhotosToLocal(formData: any) {
     try {
-        console.log("yeraha",formData);
         const files = formData.getAll('files'); // Assuming the field name is 'files'
         const filesObj: any = [];
 

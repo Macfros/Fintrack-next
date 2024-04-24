@@ -33,7 +33,7 @@ const sidebarItems = [
   },
   {
      name: "ITR filing",
-     href: "/contacts",
+     href: "/itr",
      icon: TiContacts,
   }]
 

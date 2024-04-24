@@ -23,18 +23,15 @@ export async function POST(req:any, res: any) {
 
         const user = await getUser();
         const formData = await req.formData();
-        const newFiles = await savePhotosToLocal(formData);
-        const photos = await uploadPhotosToCloudinary(newFiles);
+        let newFiles = await savePhotosToLocal(formData);
+        newFiles= await uploadPhotosToCloudinary(newFiles);
         
-
-
-            const mindeeClient = new mindee.Client({ apiKey: "394ae5ea50137ff83c5ba4fcd3cea594" });
-                console.log();
+            const mindeeClient = new mindee.Client({ apiKey: process.env.MINDEE_API_KEY });
                 // Load a file from disk
-                const inputSource = mindeeClient.docFromPath("C:/Users/RSK.BSL-243/Desktop/billSample.jpeg");
+                const inputSource = await mindeeClient.docFromUrl(newFiles[0].secure_url);
 
                 // Parse the file
-                const apiResponse = mindeeClient.parse(
+                const apiResponse =  mindeeClient.parse(
                 mindee.product.ReceiptV5,
                 inputSource
                 );
@@ -49,7 +46,7 @@ export async function POST(req:any, res: any) {
                         category: resp.document.inference.prediction.category.value || " ",
                         amount: resp.document.inference.prediction.totalAmount.value || 0,
                         authorId: user?.id,
-                        secure_url: photos[0].secure_url,
+                        secure_url: newFiles[0].secure_url,
                         subitems: {
                             createMany: {
                                 data: resp.document.inference.prediction.lineItems.map(item => ({
@@ -63,13 +60,12 @@ export async function POST(req:any, res: any) {
                         subitems: true
                     }
                 });
-                
-        
                     
                 })
                 .catch((error) => {
-                    console.log("Error in promise",error);
+                    console.log("Error in promise ->",error);
                 });
+
                     return NextResponse.json({status: 200});
                 
 
